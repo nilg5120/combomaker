@@ -7,17 +7,24 @@ document.addEventListener('DOMContentLoaded', function() {
 
             // 選択肢をフォームに追加
             const form = document.getElementById('choicesForm');
-            quizData.choices.forEach((choice) => {
+            const alphabet = ['a', 'b', 'c', 'd', 'e']; // ラベルの配列
+                    
+            quizData.choices.forEach((choice, index) => {
                 const label = document.createElement('label');
                 const input = document.createElement('input');
                 input.type = 'checkbox';
                 input.name = 'choices';
                 input.value = choice;
                 label.appendChild(input);
-                label.append(choice);
+            
+                // ラベルのテキストを 'a', 'b', 'c', 'd' に対応させる
+                const labelText = document.createTextNode(`${alphabet[index]}. ${choice}`);
+                label.appendChild(labelText);
+            
                 form.appendChild(label);
                 form.appendChild(document.createElement('br'));
             });
+
 
             // 回答ボタンのイベントリスナーを設定
             document.getElementById('submitAnswer').addEventListener('click', function() {
