@@ -11,9 +11,9 @@ public class HelloController {
         return "index";
     }
 
-    @GetMapping("/about")
-    public String about() {
-        return "about"; // "src/main/resources/templates/about.html" にマッピングされます。
+    @GetMapping("/quiz")
+    public String quiz() {
+        return "quiz";
     }
 
 }
