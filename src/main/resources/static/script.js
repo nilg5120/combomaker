@@ -1,6 +1,7 @@
 $(document).ready(function(){
     attachClickEventToAttackButtons();
     setupCopyButton();
+    setupDeleteButton();
 });
 
 function attachClickEventToAttackButtons() {
@@ -11,7 +12,11 @@ function attachClickEventToAttackButtons() {
 }
 
 function appendTextToCombo(text) {
-    $('#combo').append(text + ' ');
+    if ($('#combo').text() == '') {
+        $('#combo').append(text);
+    }else {
+        $('#combo').append('→' + text);
+    }
 }
 
 function setupCopyButton() {
@@ -26,4 +31,10 @@ function copyTextToClipboard(text) {
     temp.val(text).select();
     document.execCommand('copy');
     temp.remove();
+}
+
+function setupDeleteButton() {
+    $('#deleteButton').click(function() {
+        $('#combo').text('');
+    });
 }
