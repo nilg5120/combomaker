@@ -2,6 +2,7 @@ $(document).ready(function(){
     attachClickEventToAttackButtons();
     setupCopyButton();
     setupDeleteButton();
+    setupconseleButton();
 });
 
 function attachClickEventToAttackButtons() {
@@ -36,5 +37,11 @@ function copyTextToClipboard(text) {
 function setupDeleteButton() {
     $('#deleteButton').click(function() {
         $('#combo').text('');
+    });
+}
+
+function setupconseleButton() {
+    $('#consoleButton').click(function() {
+        console.log($('#combo').text());
     });
 }
