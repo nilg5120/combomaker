@@ -1,8 +1,10 @@
 $(document).ready(function(){
     attachClickEventToAttackButtons();
+    attachClickEventToNumberButtons();
     setupCopyButton();
-    setupDeleteButton();
-    setupconseleButton();
+    setupResetButton();
+    setupConseleButton();
+    setupUndoButton();
 });
 
 function attachClickEventToAttackButtons() {
@@ -12,11 +14,40 @@ function attachClickEventToAttackButtons() {
     });
 }
 
-function appendTextToCombo(text) {
+function attachClickEventToNumberButtons() {
+    $('.number').click(function() {
+        var buttonText = $(this).text();
+        appendTextnumberToCombo(buttonText);
+    });
+}
+
+function appendTextnumberToCombo(text) {
+    let str = $('#combo').text();
     if ($('#combo').text() == '') {
         $('#combo').append(text);
     }else {
-        $('#combo').append('→' + text);
+        if(isLastCharacterDigit(str)){
+            $('#combo').append(text);
+        }else{
+            $('#combo').append('→' + text);
+        }
+    }
+}
+
+function isLastCharacterDigit(str) {
+    return /\d$/.test(str);
+}
+
+function appendTextToCombo(text) {
+    let str = $('#combo').text();
+    if ($('#combo').text() == '') {
+        $('#combo').append(text);
+    }else {
+        if(isLastCharacterDigit(str)){
+            $('#combo').append(text);
+        }else{
+            $('#combo').append('→' + text);
+        }
     }
 }
 
@@ -34,14 +65,25 @@ function copyTextToClipboard(text) {
     temp.remove();
 }
 
-function setupDeleteButton() {
-    $('#deleteButton').click(function() {
+function setupResetButton() {
+    $('#resetButton').click(function() {
         $('#combo').text('');
     });
 }
 
-function setupconseleButton() {
+function setupConseleButton() {
     $('#consoleButton').click(function() {
+
         console.log($('#combo').text());
+    });
+}
+
+function setupUndoButton() {
+    $('#undoButton').click(function() {
+        let str = $('#combo').text();
+        const index = str.lastIndexOf('→');
+        str = str.substring(0, index);
+        //console.log(str);
+        $('#combo').text(str);
     });
 }
