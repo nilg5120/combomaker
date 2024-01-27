@@ -17,21 +17,8 @@ function attachClickEventToAttackButtons() {
 function attachClickEventToNumberButtons() {
     $('.number').click(function() {
         var buttonText = $(this).text();
-        appendTextnumberToCombo(buttonText);
+        appendTextToCombo(buttonText);
     });
-}
-
-function appendTextnumberToCombo(text) {
-    let str = $('#combo').text();
-    if ($('#combo').text() == '') {
-        $('#combo').append(text);
-    }else {
-        if(isLastCharacterDigit(str)){
-            $('#combo').append(text);
-        }else{
-            $('#combo').append('→' + text);
-        }
-    }
 }
 
 function isLastCharacterDigit(str) {
