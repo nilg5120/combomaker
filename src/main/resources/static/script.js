@@ -5,6 +5,7 @@ $(document).ready(function(){
     setupResetButton();
     setupConseleButton();
     setupUndoButton();
+    setupDeleyButton();
 });
 
 function attachClickEventToAttackButtons() {
@@ -21,21 +22,35 @@ function attachClickEventToNumberButtons() {
     });
 }
 
-function isLastCharacterDigit(str) {
-    return /\d$/.test(str);
-}
-
+//コンボの後ろに文字を追加する
 function appendTextToCombo(text) {
     let str = $('#combo').text();
+    var numberInput = document.getElementById('deleyinput');
+    var deleycheckbox = document.getElementById('deleycheckbox');
+    var jumpcheckbox = document.getElementById('jumpcheckbox');
+
     if ($('#combo').text() == '') {
-        $('#combo').append(text);
+        if(isJumpcheckbox()){
+            $('#combo').append('J'+text);
+        }else{
+            $('#combo').append(text);
+        }
     }else {
-        if(isLastCharacterDigit(str)){
+        if(isJumpcheckbox()){
+            $('#combo').append('→J');
+        }
+        if(/\d$/.test(str)|isaddattackinput()|isJumpcheckbox()){
             $('#combo').append(text);
         }else{
             $('#combo').append('→' + text);
         }
+        if(isdeleycheckbox()){
+            $('#combo').append('(dl'+ numberInput.value +'F)');
+        }
+        
     }
+    deleycheckbox.checked = false;
+    jumpcheckbox.checked = false;
 }
 
 function setupCopyButton() {
@@ -70,7 +85,37 @@ function setupUndoButton() {
         let str = $('#combo').text();
         const index = str.lastIndexOf('→');
         str = str.substring(0, index);
-        //console.log(str);
         $('#combo').text(str);
     });
+}
+
+function isaddattackinput() {
+    if (document.getElementById('addattackinput').checked) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+function isdeleycheckbox() {
+    if (document.getElementById('deleycheckbox').checked) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+function setupDeleyButton(){
+    $('#deleyButton').click(function() {
+        var numberInput = document.getElementById('deleyinput');
+        console.log(numberInput.value+"F");
+    });
+}
+
+function isJumpcheckbox() {
+    if (document.getElementById('jumpcheckbox').checked) {
+        return true;
+    } else {
+        return false;
+    }
 }
