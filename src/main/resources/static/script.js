@@ -39,8 +39,14 @@ function appendTextToCombo(text) {
         if(isJumpcheckbox()){
             $('#combo').append('→J');
         }
-        if(/\d$/.test(str)|isAddAttackInput()|isJumpcheckbox()|isHoldcheckbox()|isTCcheckbox()){
+        if(/\d$/.test(str)|isAddAttackInput()|isJumpcheckbox()|isHoldcheckbox()){
             $('#combo').append(text);
+        }else if(isTCcheckbox()){
+            if(isLastCharacterkakko(str)){
+                $('#combo').append(text);
+            }else{
+                $('#combo').append('.'+text);
+            }
         }else if(isDeleyCheckbox()){
             $('#combo').append('(dl'+ deleyInput.value +'F)');
         }else if(isHoldcheckbox()){
@@ -48,7 +54,6 @@ function appendTextToCombo(text) {
         }else{
         $('#combo').append('→' + text);
         }
-        
     }
     document.getElementById('deleycheckbox').checked = false;
     document.getElementById('jumpcheckbox').checked = false;
@@ -60,6 +65,14 @@ function setupCopyButton() {
         copyTextToClipboard($('#combo').text());
         alert('コピーしました');
     });
+}
+
+function isLastCharacterkakko(text) {
+    if (text.length === 0) {
+        return false; // 空のテキストの場合、falseを返す
+    }
+
+    return text.slice(-1) === "["; // 最後の文字が "[" かどうかを判断
 }
 
 function copyTextToClipboard(text) {
@@ -143,8 +156,10 @@ function isTCcheckbox(){
 function setupTCcheckbox(){
     document.getElementById('TCcheckbox').addEventListener('change', function() {
         if (this.checked) {
+            $('#combo').append('[');
             console.log('TCチェックボックスはチェックされています。');
         } else {
+            $('#combo').append(']');
             console.log('TCチェックボックスはチェックされていません。');
         }
     });
