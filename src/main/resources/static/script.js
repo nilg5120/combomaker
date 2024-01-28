@@ -3,10 +3,10 @@ $(document).ready(function(){
     attachClickEventToNumberButtons();
     setupCopyButton();
     setupResetButton();
-    setupConseleButton();
+    setupConsoleButton();
     setupUndoButton();
     setupDeleyButton();
-    setupHoldButton();
+    setupTCcheckbox();
 });
 
 function attachClickEventToAttackButtons() {
@@ -28,9 +28,6 @@ function appendTextToCombo(text) {
     let str = $('#combo').text();
     var deleyInput = document.getElementById('deleyinput');
     var holdInput = document.getElementById('holdinput');
-    var deleycheckbox = document.getElementById('deleycheckbox');
-    var jumpcheckbox = document.getElementById('jumpcheckbox');
-    var holdcheckbox = document.getElementById('holdcheckbox');
 
     if ($('#combo').text() == '') {
         if(isJumpcheckbox()){
@@ -42,22 +39,20 @@ function appendTextToCombo(text) {
         if(isJumpcheckbox()){
             $('#combo').append('→J');
         }
-        if(/\d$/.test(str)|isaddattackinput()|isJumpcheckbox()|isHoldcheckbox()){
+        if(/\d$/.test(str)|isAddAttackInput()|isJumpcheckbox()|isHoldcheckbox()|isTCcheckbox()){
             $('#combo').append(text);
-        }else{
-            $('#combo').append('→' + text);
-        }
-        if(isDeleycheckbox()){
+        }else if(isDeleyCheckbox()){
             $('#combo').append('(dl'+ deleyInput.value +'F)');
-        }
-        if(isHoldcheckbox()){
+        }else if(isHoldcheckbox()){
             $('#combo').append('(hold'+ holdInput.value +'F)');
+        }else{
+        $('#combo').append('→' + text);
         }
         
     }
-    deleycheckbox.checked = false;
-    jumpcheckbox.checked = false;
-    holdcheckbox.checked = false;
+    document.getElementById('deleycheckbox').checked = false;
+    document.getElementById('jumpcheckbox').checked = false;
+    document.getElementById('holdcheckbox').checked = false;
 }
 
 function setupCopyButton() {
@@ -81,7 +76,7 @@ function setupResetButton() {
     });
 }
 
-function setupConseleButton() {
+function setupConsoleButton() {
     $('#consoleButton').click(function() {
 
         console.log($('#combo').text());
@@ -97,7 +92,7 @@ function setupUndoButton() {
     });
 }
 
-function isaddattackinput() {
+function isAddAttackInput() {
     if (document.getElementById('addattackinput').checked) {
         return true;
     } else {
@@ -105,7 +100,7 @@ function isaddattackinput() {
     }
 }
 
-function isDeleycheckbox() {
+function isDeleyCheckbox() {
     if (document.getElementById('deleycheckbox').checked) {
         return true;
     } else {
@@ -128,17 +123,30 @@ function isHoldcheckbox() {
     }
 }
 
-function setupHoldButton(){
-    $('#holdButton').click(function() {
-        var numberInput = document.getElementById('holdinput');
-        console.log(numberInput.value+"F");
-    });
-}
-
 function isJumpcheckbox() {
     if (document.getElementById('jumpcheckbox').checked) {
         return true;
     } else {
         return false;
     }
+}
+
+function isTCcheckbox(){
+    if (document.getElementById('TCcheckbox').checked) {
+        console.log('TCON');
+        return true;
+    } else {
+        return false;
+    }
+}
+
+function setupTCcheckbox(){
+    document.getElementById('TCcheckbox').addEventListener('change', function() {
+        if (this.checked) {
+            console.log('TCチェックボックスはチェックされています。');
+        } else {
+            console.log('TCチェックボックスはチェックされていません。');
+        }
+    });
+    
 }
