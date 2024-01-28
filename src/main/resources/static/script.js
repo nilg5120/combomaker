@@ -6,6 +6,7 @@ $(document).ready(function(){
     setupConseleButton();
     setupUndoButton();
     setupDeleyButton();
+    setupHoldButton();
 });
 
 function attachClickEventToAttackButtons() {
@@ -25,9 +26,11 @@ function attachClickEventToNumberButtons() {
 //コンボの後ろに文字を追加する
 function appendTextToCombo(text) {
     let str = $('#combo').text();
-    var numberInput = document.getElementById('deleyinput');
+    var deleyInput = document.getElementById('deleyinput');
+    var holdInput = document.getElementById('holdinput');
     var deleycheckbox = document.getElementById('deleycheckbox');
     var jumpcheckbox = document.getElementById('jumpcheckbox');
+    var holdcheckbox = document.getElementById('holdcheckbox');
 
     if ($('#combo').text() == '') {
         if(isJumpcheckbox()){
@@ -39,23 +42,28 @@ function appendTextToCombo(text) {
         if(isJumpcheckbox()){
             $('#combo').append('→J');
         }
-        if(/\d$/.test(str)|isaddattackinput()|isJumpcheckbox()){
+        if(/\d$/.test(str)|isaddattackinput()|isJumpcheckbox()|isHoldcheckbox()){
             $('#combo').append(text);
         }else{
             $('#combo').append('→' + text);
         }
-        if(isdeleycheckbox()){
-            $('#combo').append('(dl'+ numberInput.value +'F)');
+        if(isDeleycheckbox()){
+            $('#combo').append('(dl'+ deleyInput.value +'F)');
+        }
+        if(isHoldcheckbox()){
+            $('#combo').append('(hold'+ holdInput.value +'F)');
         }
         
     }
     deleycheckbox.checked = false;
     jumpcheckbox.checked = false;
+    holdcheckbox.checked = false;
 }
 
 function setupCopyButton() {
     $('#copyButton').click(function() {
         copyTextToClipboard($('#combo').text());
+        alert('コピーしました');
     });
 }
 
@@ -97,7 +105,7 @@ function isaddattackinput() {
     }
 }
 
-function isdeleycheckbox() {
+function isDeleycheckbox() {
     if (document.getElementById('deleycheckbox').checked) {
         return true;
     } else {
@@ -108,6 +116,21 @@ function isdeleycheckbox() {
 function setupDeleyButton(){
     $('#deleyButton').click(function() {
         var numberInput = document.getElementById('deleyinput');
+        console.log(numberInput.value+"F");
+    });
+}
+
+function isHoldcheckbox() {
+    if (document.getElementById('holdcheckbox').checked) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+function setupHoldButton(){
+    $('#holdButton').click(function() {
+        var numberInput = document.getElementById('holdinput');
         console.log(numberInput.value+"F");
     });
 }
